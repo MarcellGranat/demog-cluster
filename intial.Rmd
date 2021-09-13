@@ -1,0 +1,26 @@
+---
+title: "initial"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+```{r}
+library(tidyverse)
+library(eurostat)
+```
+
+
+## datasetup
+
+
+```{r}
+dataset_nuts2 <- search_eurostat("NUTS 2")
+```
+
+```{r}
+knitr::kable(select(dataset_nuts2, title, code, `data start`, `data end`), caption = "Változó lista")
+```
+
