@@ -1,0 +1,45 @@
+﻿title;code
+Economic accounts for agriculture by NUTS 2 regions;agr_r_accts
+Population on 1 January by age, sex and NUTS 2 region;demo_r_d2jan
+Population on 1 January by age group, sex and NUTS 2 region;demo_r_pjangroup
+Population structure indicators by NUTS 2 region;demo_r_pjanind2
+Live births by mother’s age and NUTS 2 region;demo_r_fagec
+Fertility rates by age and NUTS 2 region;demo_r_frate2
+Fertility indicators by NUTS 2 region;demo_r_find2
+Infant mortality rates by NUTS 2 region;demo_r_minfind
+Life table by age, sex and NUTS 2 region;demo_r_mlife
+Life expectancy by age, sex and NUTS 2 region;demo_r_mlifexp
+Gross domestic product (GDP) at current market prices by NUTS 2 regions;nama_10r_2gdp
+Real growth rate of regional gross value added (GVA) at basic prices by NUTS 2 regions - percentage change on previous year;nama_10r_2gvagr
+Gross fixed capital formation by NUTS 2 regions;nama_10r_2gfcf
+Compensation of employees by NUTS 2 regions;nama_10r_2coe
+Employment (thousand hours worked) by NUTS 2 regions;nama_10r_2emhrw
+Income of households by NUTS 2 regions;nama_10r_2hhinc
+Participation rate in education and training (last 4 weeks) by NUTS 2 regions;trng_lfse_04
+Population by educational attainment level, sex and NUTS 2 regions (%);edat_lfse_04
+Early leavers from education and training by sex and NUTS 2 regions;edat_lfse_16
+Young people neither in employment nor in education and training by sex and NUTS 2 regions (NEET rates);edat_lfse_22
+Employment rates of young people not in education and training by sex, educational attainment level, years since completion of highest level of education and NUTS 2 regions;edat_lfse_33
+GERD by sector of performance and NUTS 2 regions;rd_e_gerdreg
+Health personnel by NUTS 2 regions;hlth_rs_prsrg
+Hospital beds by NUTS 2 regions;hlth_rs_bdsrg
+Road, rail and navigable inland waterways networks by NUTS 2 regions;tran_r_net
+Stock of vehicles by category and NUTS 2 regions;tran_r_vehst
+Population by sex, age, citizenship, labour status and NUTS 2 regions;lfst_r_lfsd2pwn
+Population by sex, age, country of birth, labour status and NUTS 2 regions;lfst_r_lfsd2pwc
+Population by sex, age, educational attainment level and NUTS 2 regions (1 000);lfst_r_lfsd2pop
+Activity rates by sex, age, educational attainment level, citizenship and NUTS 2 regions;lfst_r_lfp2actrtn
+Activity rates by sex, age, educational attainment level, country of birth and NUTS 2 regions;lfst_r_lfp2actrc
+Economically active population by sex, age, educational attainment level and NUTS 2 regions (1 000);lfst_r_lfp2acedu
+Employment by sex, age, full-time/part-time, professional status and NUTS 2 regions (1 000);lfst_r_lfe2eftpt
+Employment by sex, age, educational attainment level and NUTS 2 regions (1 000);lfst_r_lfe2eedu
+Employment rates by sex, age, educational attainment level, citizenship and NUTS 2 regions;lfst_r_lfe2emprtn
+Employment rates by sex, age, educational attainment level, country of birth and NUTS 2 regions;lfst_r_lfe2emprc
+Average number of usual weekly hours of work in main job by sex, age and NUTS 2 regions (hours);lfst_r_lfe2ehour
+Unemployment rates by sex, age, educational attainment level and NUTS 2 regions (%);lfst_r_lfu3rt
+Long-term unemployment (12 months and more) by sex, age, educational attainment level and NUTS 2 regions (%);lfst_r_lfu2ltu
+Unemployment rates by sex, age, country of birth and NUTS 2 regions;lfst_r_lfur2gac
+Number of households by degree of urbanisation and NUTS 2 regions (1 000);lfst_r_lfsd2hh
+Real growth rate of regional gross value added (GVA) at basic prices by NUTS 2 regions - percentage change on previous year;nama_10r_2gvagr
+Live births by mother’s age and NUTS 2 region;demo_r_fagec
+Infant mortality rates by NUTS 2 region;demo_r_minfind
