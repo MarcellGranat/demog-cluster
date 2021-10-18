@@ -9,14 +9,23 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 ```
 
+# TODO
+
+- térképen klaszterszám
+- alap mutatók klaszterenként
+- nuts vs time table -> klaszterszín
+
+
 ```{r}
 library(tidyverse)
 library(eurostat)
 library(sf)
+
+set.seed(2021)
 ```
 
 
-## datasetup
+## Data setup
 
 ```{r}
 df_tfr <- get_eurostat("demo_r_find2", time_format = "num") %>% 
@@ -71,102 +80,45 @@ dat <- list(df_tfr, df_lifexp, df_ageing, df_motherrate, df_emp) %>%
   mutate(country = str_sub(str_sub(geo, end = 2))) %>% 
   filter(country %in% eu_countries$code) %>% 
   select(time, country, geo, everything())
+
+dat
+```
+
+```{r}
+dat <- dat %>% 
+  select(-country) %>% 
+  group_by(time) %>% 
+  nest() %>% 
+  mutate(
+    data = map(data, na.omit),
+    geo = map(data, "geo"),
+    data = map(data, select, -geo),
+    scaled_data = map(data, scale)
+  )
+
+dat
 ```
 
 ## Cluster analyses
 
 ```{r}
-count(dat, time) %>% 
-  ggplot(aes(time, n)) + 
-  geom_col()
+cluster_df <- crossing(time = 1999:2019, n_cluster = 2:10)
+
+cluster_df
 ```
 
 ```{r}
-dat_scaled <- dat %>%
-  na.omit() %>% 
-  filter(time > 2005 & time < 2020) %>% 
-  select(-(1:3)) %>% 
-  scale()
-```
-
-```{r}
-clusters_df <- dat %>%
-  na.omit() %>% 
-  filter(time >= 2005 & time < 2020) %>% 
-  group_by(time) %>% 
-  nest() %>% 
+cluster_df <- cluster_df %>% 
   mutate(
-    obs = map_int(data, nrow),
-    mdata = map(data, select_if, is.numeric),
-    mdata = map(mdata, scale),
-    silhuette_plot = map(mdata, ~ factoextra::fviz_nbclust(., FUNcluster = kmeans, method="silhouette") + ggtitle(time)),
-    gap_stat_plot = map(mdata, ~ factoextra::fviz_nbclust(., FUNcluster = kmeans, method="gap_stat") + ggtitle(time))
+    fit = map2(time, n_cluster, 
+               ~ kmeans(na.omit(filter(dat, time == .x)$scaled_data[[1]]), 
+                        centers = .y, nstart=100, iter.max=100))
   )
-```
 
-```{r fig.height=10}
-clusters_df %>% 
-  pull(silhuette_plot) %>% 
-  rev() %>% 
-  patchwork::wrap_plots(ncol = 3)
-```
-
-
-```{r fig.height=10}
-clusters_df %>% 
-  pull(gap_stat_plot) %>% 
-  rev() %>% 
-  patchwork::wrap_plots(ncol = 3)
+cluster_df
 ```
 
 ```{r}
-clusters_df <- clusters_df %>% 
-  mutate(
-    km3 = map(mdata, ~ kmeans(., centers = 3, nstart=100, iter.max=100)),
-    km4 = map(mdata, ~ kmeans(., centers = 4, nstart=100, iter.max=100)),
-    km5 = map(mdata, ~ kmeans(., centers = 5, nstart=100, iter.max=100))
-  )
-```
-
-
-```{r}
-clusters_df %>% 
-  pivot_longer(km3:km5, names_to = "centers", values_to = "kmeans") %>% 
-    transmute(time, centers = parse_number(centers), r_squared = map_dbl(kmeans, ~ .$betweenss / .$totss)) %>% 
-  ggplot(aes(centers, time, fill = r_squared)) + 
-  geom_tile(color = "black")
-```
-
-## dist matrix
-
-```{r}
-eurostat::get_eurostat_geospatial(nuts_level = "2") %>% 
-  tibble() %>% 
-  select(geo, geometry) %>% 
-  mutate(
-    c = sf::st_centroid(geometry),
-    g = map(c, as.numeric),
-    lng = map_dbl(g, 1),
-    lat = map_dbl(g, 2)
-         ) %>% 
-  ggplot() + 
-  geom_sf(aes(geometry = geometry)) +
-  geom_point(aes(lng, lat), color = "red")
-  
-```
-
-```{r}
-eurostat::get_eurostat_geospatial(nuts_level = "2") %>% 
-  tibble() %>% 
-  select(geo, geometry) %>% 
-  mutate(
-    c = sf::st_centroid(geometry),
-    g = map(c, as.numeric),
-    lng = map_dbl(g, 1),
-    lat = map_dbl(g, 2)
-         ) %>% 
-  select(geo, lng, lat) %>% 
-  column_to_rownames("geo") %>% 
-  dist(diag = T, upper = T)
+save(list = c("cluster_df", "dat"), file = "Cluster_result.RData")
 ```
 
